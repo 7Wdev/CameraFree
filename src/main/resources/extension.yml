@@ -1,0 +1,6 @@
+id: sevenwdev
+name: CameraFree
+main: org.geyserplus.extension.sevenwdev.CameraFree
+api: 1.0.0
+version: 1.0.1
+authors: [Ade Issawe]

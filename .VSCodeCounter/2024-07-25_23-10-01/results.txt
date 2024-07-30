@@ -1,0 +1,92 @@
+Date : 2024-07-25 23:10:01
+Directory : d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin
+Total : 40 files,  2204 codes, 58 comments, 439 blanks, all 2701 lines
+
+Languages
++-----------------+------------+------------+------------+------------+------------+
+| language        | files      | code       | comment    | blank      | total      |
++-----------------+------------+------------+------------+------------+------------+
+| Java            |         32 |      2,039 |         29 |        391 |      2,459 |
+| Gradle          |          2 |         56 |          0 |          7 |         63 |
+| Markdown        |          2 |         45 |          0 |         18 |         63 |
+| Batch           |          1 |         39 |         29 |         22 |         90 |
+| YAML            |          2 |         20 |          0 |          0 |         20 |
+| Java Properties |          1 |          5 |          0 |          1 |          6 |
++-----------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                                    | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                                       |         40 |      2,204 |         58 |        439 |      2,701 |
+| . (Files)                                                                                                                                               |          4 |        127 |         29 |         40 |        196 |
+| gradle                                                                                                                                                  |          1 |          5 |          0 |          1 |          6 |
+| gradle\wrapper                                                                                                                                          |          1 |          5 |          0 |          1 |          6 |
+| src                                                                                                                                                     |         35 |      2,072 |         29 |        398 |      2,499 |
+| src\main                                                                                                                                                |         35 |      2,072 |         29 |        398 |      2,499 |
+| src\main\java                                                                                                                                           |         32 |      2,039 |         29 |        391 |      2,459 |
+| src\main\java\org                                                                                                                                       |         32 |      2,039 |         29 |        391 |      2,459 |
+| src\main\java\org\geyserplus                                                                                                                            |         32 |      2,039 |         29 |        391 |      2,459 |
+| src\main\java\org\geyserplus (Files)                                                                                                                    |          2 |         59 |          3 |         14 |         76 |
+| src\main\java\org\geyserplus\extension                                                                                                                  |          1 |         24 |          0 |          5 |         29 |
+| src\main\java\org\geyserplus\extension\sevenwdev                                                                                                        |          1 |         24 |          0 |          5 |         29 |
+| src\main\java\org\geyserplus\spigot                                                                                                                     |         29 |      1,956 |         26 |        372 |      2,354 |
+| src\main\java\org\geyserplus\spigot\sevenwdev                                                                                                           |         29 |      1,956 |         26 |        372 |      2,354 |
+| src\main\java\org\geyserplus\spigot\sevenwdev (Files)                                                                                                   |          5 |        481 |          3 |         91 |        575 |
+| src\main\java\org\geyserplus\spigot\sevenwdev\api                                                                                                       |          5 |        263 |          1 |         66 |        330 |
+| src\main\java\org\geyserplus\spigot\sevenwdev\camera                                                                                                    |          1 |        172 |          7 |         36 |        215 |
+| src\main\java\org\geyserplus\spigot\sevenwdev\commands                                                                                                  |          1 |         43 |          0 |          3 |         46 |
+| src\main\java\org\geyserplus\spigot\sevenwdev\form                                                                                                      |         11 |        366 |          0 |         80 |        446 |
+| src\main\java\org\geyserplus\spigot\sevenwdev\form (Files)                                                                                              |          4 |        118 |          0 |         21 |        139 |
+| src\main\java\org\geyserplus\spigot\sevenwdev\form\elements                                                                                             |          7 |        248 |          0 |         59 |        307 |
+| src\main\java\org\geyserplus\spigot\sevenwdev\menu                                                                                                      |          1 |        185 |          0 |          8 |        193 |
+| src\main\java\org\geyserplus\spigot\sevenwdev\player                                                                                                    |          5 |        446 |         15 |         88 |        549 |
+| src\main\resources                                                                                                                                      |          3 |         33 |          0 |          7 |         40 |
++---------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| filename                                                                                                                                                | language        | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\README.md                                                                   | Markdown        |         32 |          0 |         11 |         43 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\build.gradle                                                                | Gradle          |         55 |          0 |          5 |         60 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\gradle\wrapper\gradle-wrapper.properties                                    | Java Properties |          5 |          0 |          1 |          6 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\gradlew.bat                                                                 | Batch           |         39 |         29 |         22 |         90 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\settings.gradle                                                             | Gradle          |          1 |          0 |          2 |          3 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\InitializeLogger.java                          | Java            |         44 |          0 |         11 |         55 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\ServerType.java                                | Java            |         15 |          3 |          3 |         21 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\extension\sevenwdev\CameraFree.java            | Java            |         24 |          0 |          5 |         29 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\BedrockAPI.java               | Java            |         80 |          0 |         16 |         96 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\BedrockPlayer.java            | Java            |        217 |          3 |         49 |        269 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\CameraFree.java               | Java            |         80 |          0 |          8 |         88 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\EventListener.java            | Java            |         84 |          0 |         11 |         95 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\Tick.java                     | Java            |         20 |          0 |          7 |         27 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\api\APIType.java              | Java            |          5 |          0 |          2 |          7 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\api\BedrockPluginAPI.java     | Java            |         23 |          0 |         16 |         39 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\api\FloodgateBedrockAPI.java  | Java            |        105 |          0 |         19 |        124 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\api\GeyserBedrockAPI.java     | Java            |        114 |          1 |         18 |        133 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\api\IBedrockPluginAPI.java    | Java            |         16 |          0 |         11 |         27 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\camera\CameraController.java  | Java            |        172 |          7 |         36 |        215 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\commands\CameraCommand.java   | Java            |         43 |          0 |          3 |         46 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\BedrockContextMenu.java  | Java            |         40 |          0 |          7 |         47 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\BedrockForm.java         | Java            |         61 |          0 |          7 |         68 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\FormComponentType.java   | Java            |         10 |          0 |          2 |         12 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\FormElement.java         | Java            |          7 |          0 |          5 |         12 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\elements\Button.java     | Java            |         44 |          0 |         10 |         54 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\elements\Dropdown.java   | Java            |         31 |          0 |          8 |         39 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\elements\Label.java      | Java            |         22 |          0 |          6 |         28 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\elements\Slider.java     | Java            |         44 |          0 |          9 |         53 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\elements\StepSlider.java | Java            |         37 |          0 |          8 |         45 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\elements\TextInput.java  | Java            |         42 |          0 |         10 |         52 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\form\elements\Toggle.java     | Java            |         28 |          0 |          8 |         36 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\menu\CameraMenu.java          | Java            |        185 |          0 |          8 |        193 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\player\PlayerCamSettings.java | Java            |        337 |          7 |         64 |        408 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\player\PlayerDevice.java      | Java            |         36 |          7 |          7 |         50 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\player\PlayerInputType.java   | Java            |         27 |          1 |          5 |         33 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\player\PlayerPlatform.java    | Java            |         32 |          0 |          6 |         38 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\java\org\geyserplus\spigot\sevenwdev\player\PlayerUIProfile.java   | Java            |         14 |          0 |          6 |         20 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\resources\extension.yml                                            | YAML            |          6 |          0 |          0 |          6 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\resources\extensionyml-README.md                                   | Markdown        |         13 |          0 |          7 |         20 |
+| d:\Ade-s-Starter-Kit\Ade-s-Starter-Kit\PCBACKUP\Projects\camera-free plugin\src\main\resources\plugin.yml                                               | YAML            |         14 |          0 |          0 |         14 |
+| Total                                                                                                                                                   |                 |      2,204 |         58 |        439 |      2,701 |
++---------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------+------------+------------+------------+------------+

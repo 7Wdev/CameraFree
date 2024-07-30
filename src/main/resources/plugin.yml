@@ -1,0 +1,14 @@
+name: CameraFree
+version: '1.21.0-v1.0.1'
+author: "Ade Issawe"
+main: org.geyserplus.spigot.sevenwdev.CameraFree
+api-version: '1.21'
+api: '1.21'
+softdepend: [floodgate, Geyser-Spigot]
+commands:
+  camera:
+    description: CameraFree settings and toggle command
+    usage: /camera <settings|toggle>
+    permission: camerafree.all
+    aliases:
+      - cf
