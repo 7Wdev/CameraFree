@@ -179,14 +179,14 @@ public class CameraController {
                     CameraCacheManager.getCameraCache(bplayer).getOffset().getRotation().setY(offset.getRotation().getY() + delta_camera_rotation.getY()*camera_speed*0.3);
                 }
                 
-                Vector location = CameraCacheManager;
-                Vector rotation = cameraData.getRotation();
+                // Vector location = CameraCacheManager;
+                // Vector rotation = cameraData.getRotation();
 
-                // Set the yaw and pitch for the location
-                location.setYaw((float) rotation.getY()); // Yaw is the rotation around the vertical axis (left/right)
-                location.setPitch((float) rotation.getX()); // Pitch is the rotation around the horizontal axis (up/down)
+                // // Set the yaw and pitch for the location
+                // location.setYaw((float) rotation.getY()); // Yaw is the rotation around the vertical axis (left/right)
+                // location.setPitch((float) rotation.getX()); // Pitch is the rotation around the horizontal axis (up/down)
 
-                bplayer.player.teleport()
+                // bplayer.player.teleport()
             }
             return;
         }
