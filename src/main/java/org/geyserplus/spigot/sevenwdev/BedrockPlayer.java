@@ -265,4 +265,13 @@ public class BedrockPlayer {
     public void setCameraEnabled(boolean cameraEnabled) {
         this.cameraEnabled = cameraEnabled;
     }
+    public World getWorld()
+    {
+
+        return player.getWorld();
+    }
+    public void setWorld(World world)
+    {
+        
+    }
 }
