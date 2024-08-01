@@ -5,6 +5,7 @@ import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.checkerframework.checker.units.qual.C;
@@ -17,6 +18,9 @@ import org.geysermc.geyser.api.connection.GeyserConnection;
 import org.geyserplus.spigot.sevenwdev.CameraFree;
 import org.geyserplus.spigot.sevenwdev.BedrockPlayer;
 import org.geyserplus.spigot.sevenwdev.player.PlayerCamSettings;
+
+import net.md_5.bungee.api.chat.hover.content.Item;
+
 import org.geyserplus.spigot.sevenwdev.camera.CameraCacheManager;
 import org.geyserplus.spigot.sevenwdev.camera.CameraCache;
 
@@ -28,13 +32,19 @@ import javax.annotation.Nullable;
 
 public class CameraController  {
 
+    private static CameraController ck;
+    private CameraController()
+    {
+
+    } 
+
     private Object player_aim;
 
     private Object player_rot_view;
     private Object player_look;
 
     private Object player_in_action;
-    private Object player_fpp;
+    private Map<BedrockPlayer,Integer> player_fpp= new HashMap<BedrockPlayer,Integer>(); 
     private Object player_rot;
     private Object player_rot_temp;
     private Object transision_rot;
@@ -42,6 +52,12 @@ public class CameraController  {
     private Object mount_speed;
     private Object aim_dist;
     private Object lean;
+    public static CameraController getInstance() {
+        if (ck == null) {
+            ck = new CameraController();
+        }
+        return ck;
+    }
     /**
      * 
      * @param player a player interface
@@ -73,7 +89,7 @@ public class CameraController  {
                         continue;
                     }
                     if (CameraFree.bplayers.get(player.getUniqueId()).isCameraEnabled()) {
-                        updateCameraSettings(CameraFree.bplayers.get(player.getUniqueId()));
+                        ck.updateCameraSettings(CameraFree.bplayers.get(player.getUniqueId()));
                     }
                 }
             }
@@ -88,7 +104,7 @@ public class CameraController  {
         }
     }
 
-    public static void updateCameraSettings(BedrockPlayer bplayer) {
+    public void updateCameraSettings(BedrockPlayer bplayer) {
         BedrockPlayer bedrockPlayer = bplayer;
         PlayerCamSettings settings = PlayerCamSettings.get(bedrockPlayer.player.getUniqueId());
         CameraData cameraData = bplayer.getCamera();
@@ -204,6 +220,10 @@ public class CameraController  {
                 camP.easeSeconds(0.1f);
                 Vector3f offVector = Vector3f.from(offset.getLocation().getX(), offset.getLocation().getY(), offset.getLocation().getZ());
                 camP.position(offVector);
+                camP.rotationX((int)offset.getRotation().getX());
+                camP.rotationY((int)offset.getRotation().getY());
+                CameraPosition builtCam= camP.build();
+                cameraData.sendCameraPosition(builtCam);
 
 
             }
@@ -214,6 +234,20 @@ public class CameraController  {
             return;
         }
         String set_crosshair = "textures/gui/crosshair_0";
+        ItemStack item = bplayer.getItemInMainHand();
+        if(settings.isMainhandItemFirstPerson())
+        {
+            if(item!=null && settings.getMainhandItemId().contains(item.getType().name())) 
+            {
+                cameraData.forceCameraPerspective(CameraPerspective.FIRST_PERSON);
+                if(settings.getCrosshairType()=="Dynamic")
+                {
+                    set_crosshair = "textures/gui/crosshair_3";
+                    player_fpp.put(bplayer, 2);
+                }
+            }
+        }
+
     }
 
     private static void setUI(BedrockPlayer bplayer, String string, String string2) {

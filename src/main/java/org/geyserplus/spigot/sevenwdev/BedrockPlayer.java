@@ -270,8 +270,9 @@ public class BedrockPlayer {
 
         return player.getWorld();
     }
-    public void setWorld(World world)
+    public ItemStack getItemInMainHand()
     {
-        
+        return this.player.getInventory().getItemInMainHand();
     }
+
 }
