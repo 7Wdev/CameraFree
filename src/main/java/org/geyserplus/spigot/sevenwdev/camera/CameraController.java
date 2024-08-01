@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 public class CameraController {
 
     private Object player_aim;
@@ -38,12 +40,23 @@ public class CameraController {
     private Object mount_speed;
     private Object aim_dist;
     private Object lean;
-
+    /**
+     * 
+     * @param player a player interface
+     * @return a {@link Boolean} with the value true if the player is not a bedrock player otherwise false
+     */
     public boolean notBedrock(Player player) {
         return !CameraFree.bplayers.containsKey(player.getUniqueId());
     }
-
-    public BedrockPlayer getPlayer(Player player) {
+    /**
+     * <summary>
+     * gets a bedrock player by their {@link UUID} using the {@link player#getUniqueId()}
+     * </summary>
+     * @param player an interface representing a template of a player
+     * @return {@link BedrockPlayer} instance if the player does not exist a default 
+     * {@link BedrockPlayer} profile will be returned
+     */
+    public  BedrockPlayer getPlayer(Player player) {
         return CameraFree.bplayers.getOrDefault(player.getUniqueId(), null);
     }
 

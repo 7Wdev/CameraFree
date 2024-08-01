@@ -24,6 +24,7 @@ public class CameraMenu extends BedrockForm {
 
                 String currentPreset = settings.getCurrentPreset();
                 CameraFree.getPluginLogger().info("Current Preset: " + currentPreset);
+                CameraFree.getPluginLogger().info("setting props"+ settings.isDynamicFirstPerson());
                 add(new Dropdown("Preset Settings (Reset all settings)",
                                 Arrays.asList("Custom", "Shoulder Camera", "Dynamic Camera", "Long Distance Camera",
                                                 "Center Camera"),
