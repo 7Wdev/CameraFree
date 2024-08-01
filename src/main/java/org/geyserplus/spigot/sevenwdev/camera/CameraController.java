@@ -1,12 +1,14 @@
 package org.geyserplus.spigot.sevenwdev.camera;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 import org.checkerframework.checker.units.qual.C;
+import org.cloudburstmc.math.vector.*;
 import org.geysermc.geyser.api.bedrock.camera.CameraData;
 import org.geysermc.geyser.api.bedrock.camera.CameraEaseType;
 import org.geysermc.geyser.api.bedrock.camera.CameraPerspective;
@@ -24,7 +26,7 @@ import java.util.UUID;
 
 import javax.annotation.Nullable;
 
-public class CameraController {
+public class CameraController  {
 
     private Object player_aim;
 
@@ -104,7 +106,7 @@ public class CameraController {
         float rideSpeed = settings.getRidingCameraDistSpeed();
         float set = (rideSpeed / 10 - 1) * 0.09f;
         float follow_strength = settings.getFollowCameraMovemnetSpeedStrength();
-        
+    
         if(CameraCacheManager.getCameraCache(bplayer) != null) {
             if (bplayer.isSneaking()) {
                 bplayer.setSneaking(false);
@@ -125,10 +127,10 @@ public class CameraController {
             double replace_y = Math.atan2(view.getX(), view.getZ());
             Vector rot = bplayer.getRotation();
             rot.setZ(0);
-            Vector buffer_rot = CameraCacheManager.getCameraCache(bplayer).getRotation();
+            Vector buffer_rot = camera_data.getRotation();
             buffer_rot.setZ(0);
             Vector delta_camera = bplayer.getLocation().toVector()
-                    .subtract(CameraCacheManager.getCameraCache(bplayer).getLocation());
+                    .subtract(camera_data.getLocation());
             double speed = delta_camera.length();
             double speed_rot = rot.distance(buffer_rot);
 
@@ -136,8 +138,8 @@ public class CameraController {
                 Vector delta_camera_rotation = new Vector();
                 delta_camera_rotation.setX(rot.getX() - buffer_rot.getX());
                 delta_camera_rotation.setY(rot.getY() - buffer_rot.getY());
-                delta_camera_rotation.setX(delta_camera_rotation.getX() + 360);
-                delta_camera_rotation.setY(delta_camera_rotation.getY() + 360);
+                delta_camera_rotation.setX((delta_camera_rotation.getX() + 360) % 360);
+                delta_camera_rotation.setY((delta_camera_rotation.getY() + 360) % 360);
                 if(delta_camera_rotation.getY() > 180) {
                     delta_camera_rotation.setY(-(360 - delta_camera_rotation.getY()));
                 }
@@ -146,7 +148,7 @@ public class CameraController {
                     delta_camera_rotation.setX(-(360 - delta_camera_rotation.getX()));
                 }
 
-                Offset offset = CameraCacheManager.getCameraCache(bplayer).getOffset();
+                Offset offset = camera_data.getOffset();
 
                 if(speed > 0) {
                     double motion = -(Math.atan2(delta_camera.getX(), delta_camera.getZ()) - replace_y);
@@ -167,13 +169,14 @@ public class CameraController {
                     
                     calc_loc.setX(calc_loc.getX()*camera_speed);
                     calc_loc.setY((calc_loc.getY() + motion_y*0.1)*camera_speed);
+                    calc_loc.setZ(calc_loc.getZ()*camera_speed);
                     
                     Vector estimate_loc = new Vector(calc_loc.getX() + offset.getLocation().getX(),
                       calc_loc.getY() + offset.getLocation().getY(),
                       calc_loc.getZ() + offset.getLocation().getZ());
                     
                     Block block = bplayer.getBlockFromPlayerWorld(estimate_loc);
-                    if(!block.getType().isSolid() & estimate_loc.distance((CameraCacheManager.getCameraCache(bplayer).getLocation())) < max_dist) {
+                    if(!block.getType().isSolid() & estimate_loc.distance((camera_data.getLocation())) < max_dist) {
                         CameraCacheManager.getCameraCache(bplayer).getOffset().getLocation().setX(CameraCacheManager.getCameraCache(bplayer).getOffset().getLocation().getX() + calc_loc.getX());
                         CameraCacheManager.getCameraCache(bplayer).getOffset().getLocation().setY(CameraCacheManager.getCameraCache(bplayer).getOffset().getLocation().getY() + calc_loc.getY());
                         CameraCacheManager.getCameraCache(bplayer).getOffset().getLocation().setZ(CameraCacheManager.getCameraCache(bplayer).getOffset().getLocation().getZ() + calc_loc.getZ());
@@ -196,6 +199,13 @@ public class CameraController {
                 Vector R= camera_data.getRotation();//Rotation
                 Location plocation = new Location(bplayer.getWorld(),L.getX(),L.getY(),L.getZ(),(float)R.getX(),(float)R.getY());
                 bplayer.player.teleport(plocation);
+                CameraPosition.Builder camP = CameraPosition.builder();
+                camP.easeType(CameraEaseType.LINEAR);
+                camP.easeSeconds(0.1f);
+                Vector3f offVector = Vector3f.from(offset.getLocation().getX(), offset.getLocation().getY(), offset.getLocation().getZ());
+                camP.position(offVector);
+
+
             }
             return;
         }
