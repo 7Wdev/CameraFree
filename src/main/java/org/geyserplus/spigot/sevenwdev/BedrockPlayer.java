@@ -159,6 +159,10 @@ public class BedrockPlayer {
         return player.getLocation();
     }
 
+    public Location getHeadLocation() {
+        return player.getEyeLocation();
+    }
+
     public Vector getViewDirection() {
         return player.getEyeLocation().getDirection();
     }
@@ -270,9 +274,25 @@ public class BedrockPlayer {
 
         return player.getWorld();
     }
+
     public ItemStack getItemInMainHand()
     {
         return this.player.getInventory().getItemInMainHand();
+    }
+
+    public boolean isInWater()
+    {
+        return this.player.isInWater();
+    }
+
+    public boolean isRiding()
+    {
+        return this.player.isInsideVehicle();
+    }
+
+    public Entity getRidingEntity()
+    {
+        return this.player.getVehicle();
     }
 
 }

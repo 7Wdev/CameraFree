@@ -4,7 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Vehicle;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -38,20 +40,20 @@ public class CameraController  {
 
     } 
 
-    private Object player_aim;
+    private Map<BedrockPlayer, Integer> player_aim = new HashMap<>();
 
     private Object player_rot_view;
-    private Object player_look;
+    private Map<BedrockPlayer, Integer> player_look = new HashMap<>();
 
-    private Object player_in_action;
-    private Map<BedrockPlayer,Integer> player_fpp= new HashMap<BedrockPlayer,Integer>(); 
-    private Object player_rot;
-    private Object player_rot_temp;
-    private Object transision_rot;
-    private Object transision_lean;
-    private Object mount_speed;
-    private Object aim_dist;
-    private Object lean;
+    private Map<BedrockPlayer, Double> player_in_action = new HashMap<>();
+    private Map<BedrockPlayer,Integer> player_fpp = new HashMap<>(); 
+    private Map<BedrockPlayer, Vector> player_rot = new HashMap<>();
+    private Map<BedrockPlayer, Double> player_rot_temp;
+    private Map<BedrockPlayer, Integer> transision_rot = new HashMap<>();
+    private Map<BedrockPlayer, Integer> transision_lean = new HashMap<>();
+    private Map<BedrockPlayer, Double> mount_speed = new HashMap<>();
+    private Map<BedrockPlayer, Double> aim_dist = new HashMap<>();
+    private Map<BedrockPlayer, Integer> lean = new HashMap<>();
     public static CameraController getInstance() {
         if (ck == null) {
             ck = new CameraController();
@@ -235,19 +237,57 @@ public class CameraController  {
         }
         String set_crosshair = "textures/gui/crosshair_0";
         ItemStack item = bplayer.getItemInMainHand();
-        if(settings.isMainhandItemFirstPerson())
-        {
-            if(item!=null && settings.getMainhandItemId().contains(item.getType().name())) 
-            {
+        if(settings.isMainhandItemFirstPerson()){
+            if(item!=null && settings.getMainhandItemId().contains(item.getType().name())) {
                 cameraData.forceCameraPerspective(CameraPerspective.FIRST_PERSON);
-                if(settings.getCrosshairType()=="Dynamic")
-                {
+                if(settings.getCrosshairType()=="Dynamic"){
                     set_crosshair = "textures/gui/crosshair_3";
                     player_fpp.put(bplayer, 2);
                 }
             }
         }
+        if(item!=null && item.getType().name() == "CROSSBOW"){
+            player_aim.put(bplayer, 2);
+        }
+        if(item==null || (player_aim.get(bplayer) == 2 && item.getType().name() != "CROSSBOW")){
+            player_aim.put(bplayer, null);
 
+        }
+
+        player_in_action.put(bplayer, Math.max(player_in_action.get(bplayer) - 0.025, 0));
+        Location loc = bplayer.getHeadLocation();
+        Vector view = bplayer.getViewDirection();
+        Vector rot = bplayer.getRotation();
+        Vector vel = bplayer.getVelocity();
+        double speed = Math.sqrt(Math.pow(vel.getX(), 2) + Math.pow(vel.getY(), 2) + Math.pow(vel.getZ(), 2));
+        double speed2d = Math.sqrt(Math.pow(vel.getX(), 2) + Math.pow(vel.getZ(), 2));
+        Location pos = bplayer.getLocation();
+
+        if(player_rot.get(bplayer) == null) {
+            player_rot.put(bplayer, rot);
+            transision_rot.put(bplayer, 0);
+            player_in_action.put(bplayer, 0d);
+            player_look.put(bplayer, 32);
+            player_rot_temp.put(bplayer, 0d);
+            transision_lean.put(bplayer, 0);
+            mount_speed.put(bplayer, 0d);
+            aim_dist.put(bplayer, 0d);
+            player_fpp.put(bplayer, 0);
+            lean.put(bplayer, 1);
+        }
+        player_fpp.put(bplayer, Math.max(player_fpp.get(bplayer) - 1, 0));
+
+        if(speed2d > 0.025 && settings.isFreeLook()){
+            player_rot_temp.put(bplayer, (Math.atan2(vel.getX(), -vel.getZ())*180/3.14-180));
+        }
+
+        boolean is_on_water = bplayer.isInWater();
+        boolean is_riding = bplayer.isRiding();
+        if(is_riding){
+            Entity getRide = bplayer.getRidingEntity();
+            Vehicle getRidingData = (Vehicle) getRide;   
+            
+        }
     }
 
     private static void setUI(BedrockPlayer bplayer, String string, String string2) {
