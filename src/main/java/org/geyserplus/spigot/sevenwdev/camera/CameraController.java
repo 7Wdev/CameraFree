@@ -20,6 +20,7 @@ import org.geysermc.geyser.api.connection.GeyserConnection;
 import org.geyserplus.spigot.sevenwdev.CameraFree;
 import org.geyserplus.spigot.sevenwdev.BedrockPlayer;
 import org.geyserplus.spigot.sevenwdev.player.PlayerCamSettings;
+import java.lang.Math;
 
 import net.md_5.bungee.api.chat.hover.content.Item;
 
@@ -285,8 +286,46 @@ public class CameraController  {
         boolean is_riding = bplayer.isRiding();
         if(is_riding){
             Entity getRide = bplayer.getRidingEntity();
-            Vehicle getRidingData = (Vehicle) getRide;   
+            Vehicle getRidingData = (Vehicle) getRide;
+            int seat = 0;
+            for(var i : getRidingData.getPassengers()){
+                if(i.getEntityId() == bplayer.player.getEntityId()){
+                    return;
+                }
+                seat++;  
+            }
             
+            int lockRiderRotation = 90; //TODO edit according to mojang's values
+            rot.setY(getRide.getLocation().getDirection().getY() + lockRiderRotation + 180);
+            double rotX = (rot.getX()+45) * Math.PI/180;
+            double rotY = (rot.getY()) * Math.PI/180;
+
+            view.setX(0);
+            view.setY(Math.cos(rotX)-Math.sin(rotX));
+            view.setZ(Math.sin(rotX)+Math.cos(rotX));
+
+            view.setX(Math.cos(rotY)*view.getX()-Math.sin(rotY)*view.getZ());
+            view.setY(view.getY());
+            view.setZ(Math.sin(rotY)*view.getX()+Math.cos(rotY)*view.getZ());
+
+            vel = getRide.getVelocity();
+        }
+
+        if(settings.isDynamicFirstPerson()){
+            double air_size = 0;
+            Vector[] perspective_scan = {
+                    new Vector(1, 1, 0),
+                    new Vector(-1, 1, 0),
+                    new Vector(0, 1, 1),
+                    new Vector(0, 1, -1),
+                    new Vector(1, 1, 1),
+                    new Vector(1, 1, -1),
+                    new Vector(-1, 1, -1),
+                    new Vector(-1, 1, 1)
+            };
+            for(Vector pov : perspective_scan){
+
+            } 
         }
     }
 

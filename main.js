@@ -392,7 +392,7 @@ system.runInterval(() => {
 				seat++;
 			}
 
-			rot.y = getRide.getRotation().y+getRidingData.getSeats()[seat].lockRiderRotation+180;
+			rot.y = getRide.getRotation().y+getRidingData.getSeats()[seat].lockRiderRotation + 180;
 			let rotX = (rot.x+45) * Math.PI/180;
 			let rotY = (rot.y) * Math.PI/180;
 			
