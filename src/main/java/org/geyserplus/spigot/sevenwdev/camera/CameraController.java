@@ -324,7 +324,10 @@ public class CameraController  {
                     new Vector(-1, 1, 1)
             };
             for(Vector pov : perspective_scan){
-
+                if (bplayer) {
+                    
+                }
+                if(air_size == 4) return;
             } 
         }
     }
