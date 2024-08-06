@@ -324,11 +324,18 @@ public class CameraController  {
                     new Vector(-1, 1, 1)
             };
             for(Vector pov : perspective_scan){
-                if (bplayer) {
-                    
+                if (bplayer.getBlockFromRay(pov, 4) != null) {
+                    air_size++;
                 }
                 if(air_size == 4) return;
-            } 
+            }
+
+            if(air_size > 3) {
+                cameraData.forceCameraPerspective(CameraPerspective.FIRST_PERSON);
+                if(settings.getCrosshairType()=="Dynamic"){
+                    set_crosshair = "textures/gui/crosshair_3";
+                }
+            }
         }
     }
 
@@ -341,6 +348,6 @@ public class CameraController  {
         if (bplayer != null) {
             bplayer.getCamera().clearCameraInstructions();
             // TODO setUI(bplayer, "textures/gui/crosshair_3", "crosshair_update");
-        }
+        } 
     }
 }

@@ -6,6 +6,7 @@ import org.geyserplus.spigot.sevenwdev.player.PlayerDevice;
 import org.geyserplus.spigot.sevenwdev.player.PlayerInputType;
 import org.geyserplus.spigot.sevenwdev.player.PlayerPlatform;
 import org.geyserplus.spigot.sevenwdev.player.PlayerUIProfile;
+import org.geyserplus.spigot.sevenwdev.raycast.RayCast;
 
 import com.velocitypowered.api.proxy.player.TabList;
 
@@ -294,5 +295,14 @@ public class BedrockPlayer {
     {
         return this.player.getVehicle();
     }
-
+    
+   public Block getBlockFromRay(Vector pov, double maxDistance) {
+    World w = this.player.getWorld();
+    Location eyeLocation = this.player.getEyeLocation();
+    Block hitBlock = RayCast.raycastBlock(eyeLocation, pov, maxDistance);
+    return hitBlock;
+   }
+      
+    
 }
+
