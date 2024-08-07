@@ -53,10 +53,10 @@ public class CameraController  {
     private Map<BedrockPlayer, Vector> player_rot = new HashMap<>();
     private Map<BedrockPlayer, Double> player_rot_temp;
     private Map<BedrockPlayer, Double> transision_rot = new HashMap<>();
-    private Map<BedrockPlayer, Integer> transision_lean = new HashMap<>();
+    private Map<BedrockPlayer, Double> transision_lean = new HashMap<>();
     private Map<BedrockPlayer, Double> mount_speed = new HashMap<>();
     private Map<BedrockPlayer, Double> aim_dist = new HashMap<>();
-    private Map<BedrockPlayer, Integer> lean = new HashMap<>();
+    private Map<BedrockPlayer, Double> lean = new HashMap<>();
     public static CameraController getInstance() {
         if (ck == null) {
             ck = new CameraController();
@@ -272,11 +272,11 @@ public class CameraController  {
             player_in_action.put(bplayer, 0d);
             player_look.put(bplayer, 32);
             player_rot_temp.put(bplayer, 0d);
-            transision_lean.put(bplayer, 0);
+            transision_lean.put(bplayer, 0d);
             mount_speed.put(bplayer, 0d);
             aim_dist.put(bplayer, 0d);
             player_fpp.put(bplayer, 0);
-            lean.put(bplayer, 1);
+            lean.put(bplayer, 1d);
         }
         player_fpp.put(bplayer, Math.max(player_fpp.get(bplayer) - 1, 0));
 
@@ -423,6 +423,50 @@ public class CameraController  {
         camera_option.put("y", lastX + additional_y);
 
         camera_option.put("dist", Math.sqrt(Math.pow(additional_x+0.01, 2) + Math.pow(additional_y+0.01, 2))*0.1);
+
+        if(bplayer.isSneaking() && settings.isPeekWhenSneak()){
+            if(settings.isAdvanceCameraRotation() && lean.get(bplayer) == 0){
+                if(transision_rot.get(bplayer) > 1){
+                    lean.put(bplayer, -1d);
+                } else if(transision_rot.get(bplayer) < -1){
+                    lean.put(bplayer, 1d);
+                }
+                transision_lean.put(bplayer, (transision_lean.get(bplayer) + perspective)*0.9);
+                if(settings.getCrosshairType()=="Dynamic"){
+                    set_crosshair = "textures/gui/crosshair_2";
+                }
+                if(transision_lean.get(bplayer) > 10){
+                    lean.put(bplayer, 1d);
+                }
+                camera_option.put("x", -7*lean.get(bplayer));
+                camera_option.put("y", 3d);
+                camera_option.put("rot_y", -5*lean.get(bplayer));
+                camera_option.put("dist", camera_option.get("dist") + peek_dist);
+                camera_option.put("ease", 0.3);
+            } else {
+                lean.put(bplayer, 0d);
+            }
+
+            if(player_aim.get(bplayer) != null && settings.getScopePerspective() == "Aim Mode"){
+                if(settings.getCrosshairType() == "Dynamic"){
+                    set_crosshair = "textures/gui/crosshair_1";
+                }
+                aim_dist.put(bplayer, aim_dist.get(bplayer) + 0.02);
+
+                item = bplayer.getItemInMainHand();
+
+                if(item != null && item.getType().name() == "SPYGLASS"){
+                    cameraData.forceCameraPerspective(CameraPerspective.FIRST_PERSON);
+                    if(settings.getCrosshairType() == "Dynamic"){
+                        set_crosshair = "textures/gui/crosshair_3";
+                    }
+                    player_fpp.put(bplayer, 1);
+                } 
+                camera_option.put("x", (-9-Math.min(aim_dist.get(bplayer), 1)*2)*(transision_rot.get(bplayer) > 0 && settings.isAdvanceCameraRotation() ? -1 : 1));
+                camera_option.put("y", 1d);
+                camera_option.put("rot_y", (transision_rot.get(bplayer) < 0 && settings.isAdvanceCameraRotation() ? 5d : -5d)); 
+            }
+        }
     }
 
     private static void setUI(BedrockPlayer bplayer, String string, String string2) {
