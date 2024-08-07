@@ -9,8 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Vehicle;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 import org.checkerframework.checker.units.qual.C;
+import org.checkerframework.checker.units.qual.t;
 import org.cloudburstmc.math.vector.*;
 import org.geysermc.geyser.api.bedrock.camera.CameraData;
 import org.geysermc.geyser.api.bedrock.camera.CameraEaseType;
@@ -50,7 +52,7 @@ public class CameraController  {
     private Map<BedrockPlayer,Integer> player_fpp = new HashMap<>(); 
     private Map<BedrockPlayer, Vector> player_rot = new HashMap<>();
     private Map<BedrockPlayer, Double> player_rot_temp;
-    private Map<BedrockPlayer, Integer> transision_rot = new HashMap<>();
+    private Map<BedrockPlayer, Double> transision_rot = new HashMap<>();
     private Map<BedrockPlayer, Integer> transision_lean = new HashMap<>();
     private Map<BedrockPlayer, Double> mount_speed = new HashMap<>();
     private Map<BedrockPlayer, Double> aim_dist = new HashMap<>();
@@ -266,7 +268,7 @@ public class CameraController  {
 
         if(player_rot.get(bplayer) == null) {
             player_rot.put(bplayer, rot);
-            transision_rot.put(bplayer, 0);
+            transision_rot.put(bplayer, 0d);
             player_in_action.put(bplayer, 0d);
             player_look.put(bplayer, 32);
             player_rot_temp.put(bplayer, 0d);
@@ -335,8 +337,92 @@ public class CameraController  {
                 if(settings.getCrosshairType()=="Dynamic"){
                     set_crosshair = "textures/gui/crosshair_3";
                 }
+                BukkitRunnable runner = new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        bplayer.player.addScoreboardTag("cancel_third_person");
+                    }
+                };
+
+                int runId = runner.runTaskTimer(CameraFree.plugin, 0L, 20L).getTaskId();
+                
+                BukkitTask runClear = new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        bplayer.player.removeScoreboardTag("cancel_third_person");
+                        Bukkit.getScheduler().cancelTask(runId);
+                        this.cancel();
+                    }
+                }.runTaskLater(CameraFree.plugin, 10L);
+                player_fpp.put(bplayer, 10);
+            }
+
+            if(bplayer.player.getScoreboardTags().contains("cancel_third_person")){
+                clearCameraInstructions(bplayer);
+                if(settings.getCrosshairType()=="Dynamic"){
+                    set_crosshair = "textures/gui/crosshair_3";
+                }
+                player_fpp.put(bplayer, 10); 
             }
         }
+
+        double rot_temp = Math.floor(Math.atan2(vel.getZ(), vel.getX()) * 180 / Math.PI - 90);
+        if(rot_temp < -180){
+            rot_temp += 360;
+        }
+
+        double delta_rot = Math.abs(rot_temp - Math.floor((rot.getY())));
+        delta_rot = Math.min(delta_rot, (360 - delta_rot));
+
+        double dir_transision = 1;
+
+        double perspective = Math.min(Math.max((player_rot.get(bplayer)).getY() - rot.getY(), -10), 10);
+        if(transision_rot.get(bplayer) > 0){
+            if(perspective < transision_rot.get(bplayer)){
+                dir_transision = 0.3;
+            }
+        } else if(transision_rot.get(bplayer) < 0){
+            if(perspective > transision_rot.get(bplayer)){
+                dir_transision = 0.3;
+            }
+        }
+
+        if(settings.isAdvanceCameraRotation()){
+            dir_transision = dir_transision*(Math.min(speed*3, 1)*0.9+0.1);
+            transision_rot.put(bplayer, Math.min(Math.max((transision_rot.get(bplayer) + perspective * dir_transision * 0.5)*(0.9975 + Math.min(speed*3, 1)*0.0025), -15), 15));
+        }
+        player_rot.put(bplayer, rot);
+        
+        Map<String, Double> camera_option = new HashMap<>();
+        camera_option.put("x", 0d);
+        camera_option.put("y", 2d);
+        camera_option.put("dist", 1d);
+        camera_option.put("y_min", 0.5);
+        camera_option.put("rot_x", 0d);
+        camera_option.put("rot_y", 0d);
+        camera_option.put("ease", 0.1);
+
+        double smooth_y = 0.5;
+
+        if(is_riding && settings.getRidingCameraDistSpeed() != 0){
+            camera_option.put("ease", 0.2); 
+            mount_speed.put(bplayer, Math.min((mount_speed.get(bplayer) + speed*(0.46+set*4))*(0.9+set), settings.getRidingCameraDist()));
+            camera_option.put("dist", 1+mount_speed.get(bplayer));   
+        }
+
+        if(settings.isAdvanceCameraRotation()){
+            double lastX = camera_option.get("x");
+            double lastRotY = camera_option.get("y");
+            camera_option.put("x", lastX + Math.max(Math.min(transision_rot.get(bplayer),10),-10)*0.75);
+            camera_option.put("rot_y",lastRotY + Math.max(Math.min(transision_rot.get(bplayer),10),-10)*0.75);
+        }
+
+        double lastX = camera_option.get("x");
+        double lastY = camera_option.get("y");
+        camera_option.put("x", lastX + additional_x);
+        camera_option.put("y", lastX + additional_y);
+
+        camera_option.put("dist", Math.sqrt(Math.pow(additional_x+0.01, 2) + Math.pow(additional_y+0.01, 2))*0.1);
     }
 
     private static void setUI(BedrockPlayer bplayer, String string, String string2) {
